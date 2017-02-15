@@ -1,0 +1,86 @@
+movies=# select * from movie;
+ id |    name     | year 
+----+-------------+------
+  1 | El rey leon | 1984
+(1 row)
+
+                                   ^
+movies=# insert into movie (name) values ('HolaHola');
+INSERT 0 1
+movies=# inster into movie(year) values (1945);
+ERROR:  syntax error at or near "inster"
+LINE 1: inster into movie(year) values (1945);
+        ^
+movies=# update movie set year=1984 where id=3;
+UPDATE 1
+movies=# select from * movie;
+ERROR:  syntax error at or near "*"
+LINE 1: select from * movie;
+                    ^
+movies=# select * from movie;
+ id |    name     | year 
+----+-------------+------
+  1 | El rey leon | 1984
+  3 | HolaHola    | 1984
+(2 rows)
+
+movies=# insert into movie (name) values ('BigFish');
+INSERT 0 1
+movies=# insert into movie (name) values ('Cars');
+INSERT 0 1
+movies=# select * from movie;
+ id |    name     | year 
+----+-------------+------
+  1 | El rey leon | 1984
+  3 | HolaHola    | 1984
+  4 | BigFish     |     
+  5 | Cars        |     
+(4 rows)
+
+movies=# insert into movie (name) values ('pelis');
+INSERT 0 1
+movies=# update movie set year=1994 where id=4;
+UPDATE 1
+movies=# update movie set year=1694 where id=5;
+UPDATE 1
+movies=# update movie set year=1684 where id=6;
+UPDATE 1
+movies=# select * from movie order by name desc limit 3;
+ id |    name     | year 
+----+-------------+------
+  6 | pelis       | 1684
+  3 | HolaHola    | 1984
+  1 | El rey leon | 1984
+(3 rows)
+
+movies=# select * from movie order by year desc limit 3;
+ id |    name     | year 
+----+-------------+------
+  4 | BigFish     | 1994
+  1 | El rey leon | 1984
+  3 | HolaHola    | 1984
+(3 rows)
+movies=# select count (year) from movie;
+ count 
+-------
+     5
+(1 row)
+movies=# alter table movie add column categoria varchar(20);
+ALTER TABLE
+movies=# update movie set categoria='terror';
+UPDATE 5
+movies=# select * from movie;
+ id |    name     | year | categoria 
+----+-------------+------+-----------
+  1 | El rey leon | 1984 | terror
+  3 | HolaHola    | 1984 | terror
+  4 | BigFish     | 1994 | terror
+  5 | Cars        | 1694 | terror
+  6 | pelis       | 1684 | terror
+(5 rows)
+
+movies=# select distinct(categoria) from movie;
+ categoria 
+-----------
+ terror
+(1 row)
