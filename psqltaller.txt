@@ -1,0 +1,38 @@
+felipe@felipe-HP-Notebook:~$ createdb movieman
+Password: 
+felipe@felipe-HP-Notebook:~$ psql -U movieman
+Password for user movieman: 
+psql (9.6.2)
+Type "help" for help.
+
+movieman=> \c movies
+You are now connected to database "movies" as user "movieman".
+movies=> create table usuarios(
+movies(> hola varchar(64));
+CREATE TABLE
+movies=> \q
+felipe@felipe-HP-Notebook:~$ psql
+Password: 
+psql (9.6.2)
+Type "help" for help.
+
+felipe=# alter user movieman set default_transaction_read_only = on;
+ALTER ROLE
+felipe=# \q
+felipe@felipe-HP-Notebook:~$ psql -U movieman
+Password for user movieman: 
+psql (9.6.2)
+Type "help" for help.
+
+movieman=> create table hola(
+movieman(> hola varchar(64));
+ERROR:  cannot execute CREATE TABLE in a read-only transaction
+movieman=> subl
+movieman-> \c
+You are now connected to database "movieman" as user "movieman".
+movieman-> \q
+movies=# select * from movie;
+ id |    name     | year 
+----+-------------+------
+  1 | El rey leon | 1984
+(1 row)
